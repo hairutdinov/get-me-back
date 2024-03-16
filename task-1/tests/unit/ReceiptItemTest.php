@@ -1,7 +1,7 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
 use app\classes\ReceiptItem;
+use PHPUnit\Framework\TestCase;
 
 class ReceiptItemTest extends TestCase
 {
