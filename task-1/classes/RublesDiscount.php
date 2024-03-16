@@ -20,4 +20,9 @@ class RublesDiscount implements DiscountTypeInterface
         }
         return $old_price - $this->discount_in_rubles;
     }
+
+    public function getDiscountInRubles()
+    {
+        return $this->discount_in_rubles;
+    }
 }

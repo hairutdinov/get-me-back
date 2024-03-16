@@ -17,4 +17,9 @@ class PercentDiscount implements DiscountTypeInterface
     {
         return $old_price * (1 - ($this->discount_percent / 100));
     }
+
+    public function getDiscountPercent()
+    {
+        return $this->discount_percent;
+    }
 }
