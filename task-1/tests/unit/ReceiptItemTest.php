@@ -1,5 +1,6 @@
 <?php
 
+use app\classes\PercentDiscount;
 use app\classes\ReceiptItem;
 use PHPUnit\Framework\TestCase;
 
@@ -80,5 +81,22 @@ class ReceiptItemTest extends TestCase
     {
         $receipt_item = new ReceiptItem("футболка", 1000, null);
         $this->assertEquals(1, $receipt_item->getQuantity());
+    }
+
+    public function testGetDiscountedPriceGetter()
+    {
+        $name = "Кроссовки";
+        $price = 2000;
+        $quantity = 2;
+
+        $item = new ReceiptItem($name, $price, $quantity);
+
+        $discount_percent = 50;
+        $discount = new PercentDiscount($discount_percent);
+        $item->applyDiscount($discount);
+
+        $expected = $price * (1 - ($discount_percent / 100));
+
+        $this->assertEquals($expected, $item->getDiscountedPrice());
     }
 }

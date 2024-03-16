@@ -22,6 +22,8 @@ class ReceiptItemIntegrationTest extends \PHPUnit\Framework\TestCase
         $property->setAccessible(true);
         $discounted_price = $property->getValue($item);
 
-        $this->assertEquals($price * (1 - ($discount_percent / 100)), $discounted_price);
+        $expected = $price * (1 - ($discount_percent / 100));
+
+        $this->assertEquals($expected, $discounted_price);
     }
 }
