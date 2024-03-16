@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="vendor/autoload.php"
+         colors="true">
+    <testsuites>
+        <testsuite name="unit">
+            <directory phpVersion="8.1.0" phpVersionOperator=">=">tests/</directory>
+        </testsuite>
+    </testsuites>
+    <source>
+        <include>
+            <directory suffix=".php">classes</directory>
+            <directory suffix=".php">interfaces</directory>
+        </include>
+    </source>
+<!--    <coverage includeUncoveredFiles="true"-->
+<!--              pathCoverage="false"-->
+<!--              ignoreDeprecatedCodeUnits="true">-->
+<!--        <report>-->
+<!--            <html outputDirectory="html-coverage" lowUpperBound="50" highLowerBound="90"/>-->
+<!--        </report>-->
+<!--    </coverage>-->
+</phpunit>
