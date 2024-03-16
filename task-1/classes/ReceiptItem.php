@@ -78,4 +78,9 @@ class ReceiptItem
     {
         return $this->discounted_price;
     }
+
+    public function getTotalDiscountedPrice()
+    {
+        return $this->discounted_price * $this->quantity;
+    }
 }
