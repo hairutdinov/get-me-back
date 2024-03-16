@@ -26,4 +26,11 @@ class PercentDiscountTest extends \PHPUnit\Framework\TestCase
         $discounted_price = $price * (1 - $percent / 100);
         $this->assertEquals($discounted_price, $percent_discount->applyDiscount($price));
     }
+
+    public function testGetDiscountPercentGetter()
+    {
+        $percent = 50;
+        $percent_discount = new PercentDiscount($percent);
+        $this->assertEquals($percent, $percent_discount->getDiscountPercent());
+    }
 }

@@ -34,4 +34,11 @@ class RublesDiscountTest extends \PHPUnit\Framework\TestCase
         $discount_in_rub = new RublesDiscount($discount_value_in_rub);
         $this->assertEquals(0, $discount_in_rub->applyDiscount($price));
     }
+
+    public function testGetDiscountInRublesGetter()
+    {
+        $discount_value_in_rub = 500;
+        $discount_in_rub = new RublesDiscount($discount_value_in_rub);
+        $this->assertEquals($discount_value_in_rub, $discount_in_rub->getDiscountInRubles());
+    }
 }
