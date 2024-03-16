@@ -2,11 +2,13 @@
 
 require_once "vendor/autoload.php";
 
+use app\classes\ReceiptItem;
 use app\classes\RegularExpressionParser;
 use app\classes\JsonParser;
 use app\classes\CashReceiptBuilder;
 use app\classes\RublesDiscount;
 use app\classes\PercentDiscount;
+use app\interfaces\DiscountTypeInterface;
 
 const TASK_DESCRIPTION = <<<HERE
 Кассовый чек может содержать одну или несколько позиций, например:
@@ -57,6 +59,7 @@ $discounts = [
 
 for ($i = 0; $i < count($receipts); $i++) {
     $receipt = $receipts[$i];
+    /* @var DiscountTypeInterface $discount */
     $discount = $discounts[$i];
 
     $first_regex_parser = new RegularExpressionParser('/^(?P<name>[а-яА-Я]+)\s?\:\s?(?P<price>\d+(\.\d+)?)₽(?:,|\.)?$/ui');
@@ -68,6 +71,20 @@ for ($i = 0; $i < count($receipts); $i++) {
     $cash_receipt = $cash_receipt_builder->getCashReceipt();
     $cash_receipt->applyDiscountToItems($discount);
 
-//    echo "<pre>" . print_r($cash_receipt->getItems(), 1) . "</pre>";
-    var_dump($cash_receipt->getItems());
+    echo "<pre>$receipt</pre>";
+    if ($discount instanceof RublesDiscount) {
+        echo "<p>Скидка: -" . $discount->getDiscountInRubles() . "₽</p>";
+    } elseif ($discount instanceof PercentDiscount) {
+        echo "<p>Скидка: -" . $discount->getDiscountPercent() . "%</p>";
+    }
+
+    foreach ($cash_receipt->getItems() as $item) {
+        /* @var $item ReceiptItem */
+        echo "<p>" . $item->getName() .
+            " <s>" . $item->getPrice() . "₽</s>
+            <span>" . $item->getDiscountedPrice() . "₽</span>
+            * <span>" . $item->getQuantity() . "</span>
+            = <span>" . $item->getTotalDiscountedPrice() . "₽</span>
+            </p>";
+    }
 }
