@@ -99,4 +99,21 @@ class ReceiptItemTest extends TestCase
 
         $this->assertEquals($expected, $item->getDiscountedPrice());
     }
+
+    public function testGetTotalDiscountedPrice()
+    {
+        $name = "Кроссовки";
+        $price = 2000;
+        $quantity = 2;
+
+        $item = new ReceiptItem($name, $price, $quantity);
+
+        $discount_percent = 50;
+        $discount = new PercentDiscount($discount_percent);
+        $item->applyDiscount($discount);
+
+        $expected = ($price * (1 - ($discount_percent / 100))) * $quantity;
+
+        $this->assertEquals($expected, $item->getTotalDiscountedPrice());
+    }
 }
